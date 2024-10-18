@@ -8,16 +8,16 @@ import DatePicker from 'react-native-date-picker';
 
 export default function DreamForm() {
   const [dreamText, setDreamText] = useState('');
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState('')
   const [isLucidDream, setIsLucidDream] = useState(false);
   const [hashtag1, setHashtag1] = useState('');
   const [hashtag2, setHashtag2] = useState('');
   const [hashtag3, setHashtag3] = useState('');
   const [hashtag4, setHashtag4] = useState('');
 
-  const findHashtagId = async () => {
-    
-  }
+  // const findHashtagId = async () => {
+    // 
+  // }
 
   const handleDreamSubmission = async () => {
     // Logique de traitement de la soumission du rêve
@@ -48,7 +48,7 @@ export default function DreamForm() {
     }
     // Réinitialisation du formulaire
     setDreamText('');
-    setDate(new Date());
+    setDate('');
     setIsLucidDream(false);
   };
   return (
@@ -62,7 +62,7 @@ export default function DreamForm() {
         numberOfLines={6}
         style={[styles.input, { width: width * 0.8, alignSelf: 'center' }]}
       />
-      <DatePicker date={date} onDateChange={setDate} />
+      {/* Selectionneur de date */}
       <View style={styles.checkboxContainer}>
         <Checkbox.Item
           label="Rêve Lucide"
