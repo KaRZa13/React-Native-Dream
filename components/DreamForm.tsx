@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
-import { TextInput, Button, Checkbox } from 'react-native-paper';
+import { TextInput, Button, Checkbox, Chip } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const { width } = Dimensions.get('window');
-import DatePicker from 'react-native-date-picker';
+
 
 
 export default function DreamForm() {
   const [dreamText, setDreamText] = useState('');
-  const [date, setDate] = useState('')
+  const [dateText, setDateText] = useState('');
   const [isLucidDream, setIsLucidDream] = useState(false);
   const [hashtag1, setHashtag1] = useState('');
   const [hashtag2, setHashtag2] = useState('');
   const [hashtag3, setHashtag3] = useState('');
   const [hashtag4, setHashtag4] = useState('');
+  const [hashtag5, setHashtag5] = useState('');
 
   // const findHashtagId = async () => {
     // 
-  // }
+  // } 
 
   const handleDreamSubmission = async () => {
     // Logique de traitement de la soumission du rêve
@@ -27,30 +29,32 @@ export default function DreamForm() {
 
       formDataArray.push(
         {
-          "dateText": date, 
+          "dateText": dateText, 
           "dreamText": dreamText, 
           "isLucidDream": isLucidDream,
           "hashtags": {
             "hashtag1": hashtag1,
             "hashtag2": hashtag2,
             "hashtag3": hashtag3,
-            "hashtag4": hashtag4
+            "hashtag4": hashtag4,
+            "hashtag5": hashtag5,
           },
         }
       );
 
       await AsyncStorage.setItem('dreamFormDataArray', JSON.stringify(formDataArray))
 
-      console.log('AsyncStorage', AsyncStorage.getItem('dreamFormDataArray'))
 
     } catch(error) {
       console.error('Erreur lors de la sauvegarde des données', error)
     }
     // Réinitialisation du formulaire
     setDreamText('');
-    setDate('');
+    setDateText('');
     setIsLucidDream(false);
   };
+
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -62,7 +66,13 @@ export default function DreamForm() {
         numberOfLines={6}
         style={[styles.input, { width: width * 0.8, alignSelf: 'center' }]}
       />
-      {/* Selectionneur de date */}
+      <TextInput
+        label="Date"
+        value={dateText}
+        onChangeText={(text) => setDateText(text)}
+        mode="outlined"
+        style={[styles.input, { width: width * 0.8, alignSelf: 'center' }]}
+      />
       <View style={styles.checkboxContainer}>
         <Checkbox.Item
           label="Rêve Lucide"

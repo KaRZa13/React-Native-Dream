@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Button } from 'react-native-paper';
 import { useFocusEffect } from 'expo-router';
 import { useCallback } from 'react';
 
 
 export default function DreamList() {
   const [dreams, setDreams] = useState([]);
+
+  const clearStorage = async () => {
+    try {
+      await AsyncStorage.clear();
+      setDreams([]);
+      console.log('AsyncStorage effacé avec succès');
+    } catch (error) {
+      console.error('Erreur lors de la suppression des données', error);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -45,6 +56,7 @@ export default function DreamList() {
           {dream.dateText} : {dream.dreamText} - {dream.isLucidDream ? 'Lucide' : 'Non Lucide'}
         </Text>
       ))}
+      <Button mode="contained" onPress={clearStorage}>Supprimer tous les rêves</Button>
     </View>
   );
 }
